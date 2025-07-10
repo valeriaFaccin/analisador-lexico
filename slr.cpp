@@ -10,8 +10,9 @@
 using namespace std;
 
 void printEstadoVariaveis(stack<int>& pilha, queue<int>& fita);
+void addPalavra(int *palavra, int *linha, int pLinha);
 
-void slr(string fitaString) {
+void slr(string fitaString, vector<tuple<vector<string>, string>> tabelafita) {
     stack<int> pilha;
     pilha.push(0);
 
@@ -27,6 +28,7 @@ void slr(string fitaString) {
     }
 
     vector<tuple<int, int>> producoes = getProducoes();
+    int indicePalavra = 0, indiceFrase = 0;
     initializeSLRTable();
     while (1) {
         printEstadoVariaveis(pilha, fita);
@@ -38,6 +40,7 @@ void slr(string fitaString) {
             pilha.push(simbolo);
             pilha.push(proximo_estado);
             fita.pop();
+            
             continue;
         }
 
@@ -86,4 +89,15 @@ void printEstadoVariaveis(stack<int>& pilha, queue<int>& fita) {
         temp_pilha.pop();
     }
     printf("\n");
+}
+
+void addPalavra(int *palavra, int *linha, int pLinha){
+    if (*palavra + 1 < plinha){
+        *palavra++
+        return ;
+    } 
+
+    *palavra++;
+    *linha++;
+    return;
 }

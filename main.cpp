@@ -5,6 +5,7 @@
 #include <string>
 #include <set>
 #include <iostream>
+#include <sstream>
 #include "slr.h"
 #include "tabela_slr.h"
 
@@ -54,19 +55,38 @@ int main(){
         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
     };
     string buffer, fita = "";
-    vector<vector<string>> tabelafita(2);
+    vector<tuple<vector<string>, string>> tabelafita;
     int i = 0;
 
     cout << "\033[1mIniciando etapa léxica\033[0m" << endl << endl;
     while(getline(cin, buffer)){
-        tabelafita[0].push_back(buffer);
-        tabelafita[1].push_back(geraFita(buffer, finais));
-        fita += tabelafita[1][i];
+        // Separa a string por espaços
+        stringstream ss(buffer);
+        string palavra;
+        vector<string> palavras;
+        while(ss >> palavra) {
+            palavras.push_back(palavra);
+        }
+        if(palavras.size()){
+            tabelafita.push_back(make_tuple(palavras, geraFita(buffer, finais)));
+        }
+        fita += get<1>(tabelafita[i]);
         i++;
     }
     fita += " 36";
-    for (int j = 0; j < tabelafita[0].size(); j++) 
-        cout << j << " L: " << tabelafita[0][j] << " tokens: " << tabelafita[1][j] << endl;
+    
+    // Mostra as linhas e seus tokens
+    for (int j = 0; j < tabelafita.size(); j++) {
+        vector<string> palavras = get<0>(tabelafita[j]);
+        string tokens = get<1>(tabelafita[j]);
+        
+        cout << j << " L: [";
+        for(int k = 0; k < palavras.size(); k++) {
+            if(k > 0) cout << ", ";
+            cout << palavras[k];
+        }
+        cout << "] tokens: " << tokens << endl;
+    }
 
     cout << endl << "fita: " << fita << endl;
 
@@ -79,7 +99,7 @@ int main(){
     cout << endl << "\033[1;32mPassou etapa léxica\033[0m" << endl << endl;
 
     cout << "\033[1mIniciando etapa sintática\033[0m" << endl << endl;
-    slr(fita);
+    slr(fita, tabelafita);
 }
 
  
