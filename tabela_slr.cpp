@@ -1,7 +1,11 @@
 #include "tabela_slr.h"
-#include <bits/stdc++.h>
+#include <vector>
+#include <tuple>
 
 using namespace std;
+
+// Definição da variável global tabela
+std::vector<std::vector<std::tuple<char, int>>> tabela(45, std::vector<std::tuple<char, int>>(70));
 
 void initializeSLRTable() {
     vector<int> simbolos = {
@@ -19,7 +23,7 @@ void initializeSLRTable() {
     }
 
     // Estado 0
-    tabela[0][14] = make_tuple('E', 2);
+    tabela[0][10] = make_tuple('E', 2);
     tabela[0][7] = make_tuple('R', 2);
     tabela[0][63] = make_tuple('V', 1);
 
@@ -31,13 +35,13 @@ void initializeSLRTable() {
     tabela[2][1] = make_tuple('E', 5);
 
     // Estado 3
-    tabela[3][62] = make_tuple('A', 1); // acc
+    tabela[3][36] = make_tuple('A', 1); // acc
 
     // Estado 4
     tabela[4][1] = make_tuple('E', 7);
-    tabela[4][14] = make_tuple('E', 8);
-    tabela[4][17] = make_tuple('E', 9);
     tabela[4][13] = make_tuple('R', 7);
+    tabela[4][10] = make_tuple('E', 8);
+    tabela[4][17] = make_tuple('E', 9);
     tabela[4][65] = make_tuple('V', 6);
 
     // Estado 5
@@ -52,7 +56,7 @@ void initializeSLRTable() {
     // Estado 8
     tabela[8][1] = make_tuple('E', 18);
     tabela[8][18] = make_tuple('E', 17);
-    tabela[8][19] = make_tuple('E', 19);
+    tabela[8][2] = make_tuple('E', 19);
     tabela[8][66] = make_tuple('V', 13);
     tabela[8][67] = make_tuple('V', 14);
     tabela[8][68] = make_tuple('V', 15);
@@ -61,24 +65,24 @@ void initializeSLRTable() {
     // Estado 9
     tabela[9][1] = make_tuple('E', 18);
     tabela[9][18] = make_tuple('E', 17);
-    tabela[9][19] = make_tuple('E', 19);
+    tabela[9][2] = make_tuple('E', 19);
     tabela[9][66] = make_tuple('V', 20);
     tabela[9][67] = make_tuple('V', 14);
     tabela[9][68] = make_tuple('V', 15);
     tabela[9][69] = make_tuple('V', 16);
 
     // Estado 10
-    tabela[10][14] = make_tuple('E', 2);
+    tabela[10][10] = make_tuple('E', 2);
     tabela[10][7] = make_tuple('R', 2);
     tabela[10][63] = make_tuple('V', 21);
 
     // Estado 11
-    tabela[11][63] = make_tuple('R', 3); // r3 em $
+    tabela[11][36] = make_tuple('R', 3); // r3 em $
 
     // Estado 12
-    tabela[12][1] = make_tuple('E', 18);
+    tabela[12][1]  = make_tuple('E', 18);
     tabela[12][18] = make_tuple('E', 17);
-    tabela[12][19] = make_tuple('E', 19);
+    tabela[12][2]  = make_tuple('E', 19);
     tabela[12][67] = make_tuple('V', 22);
     tabela[12][68] = make_tuple('V', 15);
     tabela[12][69] = make_tuple('V', 16);
@@ -91,12 +95,12 @@ void initializeSLRTable() {
     tabela[13][65] = make_tuple('V', 23);
 
     // Estado 14
-    tabela[14][20] = make_tuple('E', 24);
-    tabela[14][21] = make_tuple('E', 25);
-    tabela[14][29] = make_tuple('E', 26);
-    tabela[14][30] = make_tuple('E', 27);
-    tabela[14][22] = make_tuple('E', 28);
-    tabela[14][23] = make_tuple('E', 29);
+    tabela[10][20] = make_tuple('E', 24);
+    tabela[10][21] = make_tuple('E', 25);
+    tabela[10][29] = make_tuple('E', 26);
+    tabela[10][30] = make_tuple('E', 27);
+    tabela[10][22] = make_tuple('E', 28);
+    tabela[10][23] = make_tuple('E', 29);
 
     // Estado 15 - Reduções R14
     tabela[15][1] = make_tuple('R', 14);
@@ -113,8 +117,9 @@ void initializeSLRTable() {
     tabela[15][25] = make_tuple('E', 31);
     tabela[15][23] = make_tuple('R', 14);
     tabela[15][19] = make_tuple('R', 14);
+    tabela[15][2] = make_tuple('R', 14);
 
-    // Estado 16 - Reduções R17
+    // Estado 16 - Reduções R14
     tabela[16][1] = make_tuple('R', 17);
     tabela[16][26] = make_tuple('R', 17);
     tabela[16][13] = make_tuple('R', 17);
@@ -129,6 +134,7 @@ void initializeSLRTable() {
     tabela[16][25] = make_tuple('R', 17);
     tabela[16][23] = make_tuple('R', 17);
     tabela[16][19] = make_tuple('R', 17);
+    tabela[16][2] = make_tuple('R', 17);
 
     // Estado 17
     tabela[17][1] = make_tuple('E', 18);
@@ -138,7 +144,7 @@ void initializeSLRTable() {
     tabela[17][68] = make_tuple('V', 15);
     tabela[17][69] = make_tuple('V', 16);
 
-    // Estado 18 - Reduções R19
+    // Estado 18 - Reduções R14
     tabela[18][1] = make_tuple('R', 19);
     tabela[18][26] = make_tuple('R', 19);
     tabela[18][13] = make_tuple('R', 19);
@@ -153,8 +159,9 @@ void initializeSLRTable() {
     tabela[18][25] = make_tuple('R', 19);
     tabela[18][23] = make_tuple('R', 19);
     tabela[18][19] = make_tuple('R', 19);
+    tabela[18][2] = make_tuple('R', 19);
 
-    // Estado 19 - Reduções R20
+    // Estado 19 - Reduções R18
     tabela[19][1] = make_tuple('R', 20);
     tabela[19][26] = make_tuple('R', 20);
     tabela[19][13] = make_tuple('R', 20);
@@ -169,6 +176,7 @@ void initializeSLRTable() {
     tabela[19][25] = make_tuple('R', 20);
     tabela[19][23] = make_tuple('R', 20);
     tabela[19][19] = make_tuple('R', 20);
+    tabela[19][2] = make_tuple('R', 20);
 
     // Estado 20
     tabela[20][1] = make_tuple('E', 7);
@@ -336,8 +344,8 @@ void initializeSLRTable() {
     tabela[41][29] = make_tuple('R', 15);
     tabela[41][30] = make_tuple('R', 15);
     tabela[41][22] = make_tuple('R', 15);
-    tabela[41][24] = make_tuple('R', 16);
-    tabela[41][25] = make_tuple('R', 16);
+    tabela[41][24] = make_tuple('R', 15);
+    tabela[41][25] = make_tuple('R', 15);
     tabela[41][23] = make_tuple('R', 15);
     tabela[41][19] = make_tuple('R', 15);
 
@@ -377,53 +385,39 @@ void initializeSLRTable() {
     tabela[44][13] = make_tuple('R', 4);
 }
 
-vector getProducoes(){
-    //0 - BODY -> D C
-    //1 - D -> int VAR ; D
-    //2 - D -> ''
-    //3 - C -> begin CMD end
-    //4 - CMD -> VAR = EXPR ; CMD
-    //5 - CMD -> if COND CMD
-    //6 - CMD -> for COND CMD
-    //7 - CMD -> ''
-    //8 - COND -> EXPR < EXPR
-    //9 - COND -> EXPR > EXPR
-    //10 - COND -> EXPR == EXPR
-    //11 - COND -> EXPR != EXPR
-    //12 - EXPR -> EXPR + TERM
-    //13 - EXPR -> EXPR - TERM
-    //14 - EXPR -> TERM
-    //15 - TERM -> TERM * FACT
-    //16 - TERM -> TERM / FACT
-    //17 - TERM -> FACT
-    //18 - FACT -> ( EXPR )
-    //19 - FACT -> VAR
-    //20 - FACT -> NUM
+vector<tuple<int, int>> getProducoes() {
+    //BODY - 62
+    //D - 63
+    //C - 64
+    //CMD - 65
+    //COND - 66
+    //EXPR - 67
+    //TERM - 68
+    //FACT - 69
 
     // idProd - tamanho
 
     return vector<tuple<int, int>> {
-        make_tuple(0, 2),
-        make_tuple(1, 4),
-        make_tuple(2, 0),
-        make_tuple(3, 3),
-        make_tuple(4, 5),
-        make_tuple(5, 3),
-        make_tuple(6, 3),
-        make_tuple(7, 0),
-        make_tuple(8, 3),
-        make_tuple(9, 3),
-        make_tuple(10, 3),
-        make_tuple(11, 3),
-        make_tuple(12, 3),
-        make_tuple(13, 3),
-        make_tuple(14, 1),
-        make_tuple(15, 3),
-        make_tuple(16, 3),
-        make_tuple(17, 1),
-        make_tuple(18, 3),
-        make_tuple(19, 1),
-        make_tuple(20, 1),
-        
+        make_tuple(62, 2), // BODY -> D C
+        make_tuple(63, 4), // D -> int VAR ; D
+        make_tuple(63, 0), // D -> ''
+        make_tuple(64, 3), // C -> begin CMD end
+        make_tuple(65, 5), // CMD -> VAR = EXPR ; CMD
+        make_tuple(65, 3), // CMD -> if COND CMD
+        make_tuple(65, 3), // CMD -> for COND CMD
+        make_tuple(65, 0), // CMD -> ''
+        make_tuple(66, 3), // COND -> EXPR < EXPR
+        make_tuple(66, 3), // COND -> EXPR > EXPR
+        make_tuple(66, 3), // COND -> EXPR == EXPR
+        make_tuple(66, 3), // COND -> EXPR != EXPR
+        make_tuple(67, 3), // EXPR -> EXPR + TERM
+        make_tuple(67, 3), // EXPR -> EXPR - TERM
+        make_tuple(67, 1), // EXPR -> TERM
+        make_tuple(68, 3), // TERM -> TERM * FACT
+        make_tuple(68, 3), // TERM -> TERM / FACT
+        make_tuple(68, 1), // TERM -> FACT
+        make_tuple(69, 3), // FACT -> ( EXPR )
+        make_tuple(69, 1), // FACT -> VAR
+        make_tuple(69, 1) // FACT -> NUM
     };
 }
