@@ -5,5 +5,5 @@
 #include <unordered_map>
 
 extern std::vector<std::unordered_map<char, int>> transicoes;
-
+void inicializaTransicoes();
 #endif // TRANSICOES_H

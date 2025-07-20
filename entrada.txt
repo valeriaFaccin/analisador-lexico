@@ -1,0 +1,5 @@
+int aea ;    
+int uua ;
+int oo ; 
+begin 
+end 
