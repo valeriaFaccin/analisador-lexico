@@ -2,4 +2,6 @@ int aea ;
 int uua ;
 int oo ; 
 begin 
+    aea = 10 / ( 01 + 11 ) ;
+    uua = 01 - 01 * 110 + 11 ;
 end 

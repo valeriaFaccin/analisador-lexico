@@ -58,7 +58,7 @@ int main(){
     vector<tuple<vector<string>, string>> tabelafita;
     int i = 0;
 
-    cout << "\033[1mIniciando etapa léxica\033[0m" << endl << endl;
+    cout << "\033[1mStarting lexical analysis\033[0m" << endl << endl;
     while(getline(cin, buffer)){
         // Separa a string por espaços
         stringstream ss(buffer);
@@ -92,13 +92,13 @@ int main(){
 
     // Verifica se existe algum token de erro (31) na fita
     if (fita.find(" 31") != string::npos) {
-        cout << endl << "\033[1;31mErro: Código reprovou na etapa léxica\033[0m" << endl;
+        cout << endl << "\033[1;31mError: Failed lexical analysis\033[0m" << endl;
         return 1;
     }
 
-    cout << endl << "\033[1;32mPassou etapa léxica\033[0m" << endl << endl;
+    cout << endl << "\033[1;32mPassed lexical analysis\033[0m" << endl << endl;
 
-    cout << "\033[1mIniciando etapa sintática\033[0m" << endl << endl;
+    cout << "\033[1mStarting syntax analysis\033[0m" << endl << endl;
     slr(fita, tabelafita);
 }
 
