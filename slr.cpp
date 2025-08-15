@@ -5,14 +5,17 @@
 #include <stack>
 #include <queue>
 #include <sstream>
+
 #include "tabela_slr.h"
+#include "AbstractSyntaxTree.h"
+#include "ASTTypes.h"
 
 using namespace std;
 
 void printEstadoVariaveis(stack<int>& pilha, queue<int>& fita);
-void addPalavra(int *palavra, int *linha, int pLinha);
+void addWord(int *word, int *row, int wrow);
 
-void slr(string fitaString, vector<tuple<vector<string>, string>> tabelafita) {
+void slr(string fitaString, vector<tuple<vector<string>, string>> tapeTable) {
     stack<int> pilha;
     pilha.push(0);
 
@@ -27,20 +30,26 @@ void slr(string fitaString, vector<tuple<vector<string>, string>> tabelafita) {
         fita.push(tokenInt);
     }
 
+    AbstractSyntaxTree ast;
+
     vector<tuple<int, int>> producoes = getProducoes();
-    int indicePalavra = 0, indiceFrase = 0;
+    int wordIndex = 0, rowIndex = 0;
     initializeSLRTable();
     while (1) {
-        printEstadoVariaveis(pilha, fita);
+        // printEstadoVariaveis(pilha, fita);
         int estado = pilha.top();
         int simbolo = fita.front();
-        printf("Estado: %d, Simbolo: %d\n", estado, simbolo);
         if (get<0>(tabela[estado][simbolo]) == 'E') {
             int proximo_estado = get<1>(tabela[estado][simbolo]);
             pilha.push(simbolo);
             pilha.push(proximo_estado);
             fita.pop();
             
+            string lexval = get<0>(tapeTable[rowIndex])[wordIndex];
+
+            addWord(&wordIndex, &rowIndex, size(get<0>(tapeTable[rowIndex])));
+            Lex l = {lexval};
+            ast.MakeLeaf(l);
             continue;
         }
 
@@ -58,19 +67,22 @@ void slr(string fitaString, vector<tuple<vector<string>, string>> tabelafita) {
             pilha.push(cabecaProducao);
             pilha.push(get<1>(tabela[estado][cabecaProducao]));
 
+            ast.MakeNode(reduzProducao);
             continue;
         }
 
         if (get<0>(tabela[estado][simbolo]) == 'A') {
-            printf("Aceito\n");
-            return;
+            printf("\033[1;32mPassed syntactic analysis\033[0m\n\n");
+            break;
         }
 
         if (get<0>(tabela[estado][simbolo]) == '\0') {
-            printf("Rejeitado na etapa léxica\n");
+            printf("\033[1;31mFailed syntactic analysis\033[0m\n\n");
             return;
         } 
     }
+
+    ast.printResult();
 }
 
 void printEstadoVariaveis(stack<int>& pilha, queue<int>& fita) {
@@ -91,13 +103,13 @@ void printEstadoVariaveis(stack<int>& pilha, queue<int>& fita) {
     printf("\n");
 }
 
-void addPalavra(int *palavra, int *linha, int pLinha){
-    if (*palavra + 1 < plinha){
-        *palavra++
+void addWord(int *word, int *row, int wrow){
+    if ((*word + 1) < wrow){
+        (*word)++;
         return ;
     } 
 
-    *palavra++;
-    *linha++;
+    *word = 0;
+    (*row)++;
     return;
 }
